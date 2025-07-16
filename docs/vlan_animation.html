@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VLAN Animation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        svg {
+            width: 600px;
+            height: 400px;
+        }
+        .pc {
+            fill: white;
+            stroke: black;
+            stroke-width: 2;
+        }
+        .switch {
+            fill: #ddd;
+            stroke: black;
+            stroke-width: 2;
+        }
+        .vlan10 {
+            stroke: #1f77b4;
+            fill: #aec7e8;
+        }
+        .vlan20 {
+            stroke: #ff7f0e;
+            fill: #ffbb78;
+        }
+        .packet {
+            fill: red;
+            stroke: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>How VLAN Works</h1>
+    <svg viewBox="0 0 600 400">
+        <!-- Switch -->
+        <rect x="250" y="170" width="100" height="60" class="switch" />
+
+        <!-- PCs VLAN 10 -->
+        <rect x="100" y="80" width="60" height="40" class="pc vlan10" id="pc1" />
+        <rect x="100" y="280" width="60" height="40" class="pc vlan10" id="pc2" />
+
+        <!-- PCs VLAN 20 -->
+        <rect x="440" y="80" width="60" height="40" class="pc vlan20" id="pc3" />
+        <rect x="440" y="280" width="60" height="40" class="pc vlan20" id="pc4" />
+
+        <!-- Links -->
+        <line x1="160" y1="100" x2="250" y2="200" stroke="gray" />
+        <line x1="160" y1="300" x2="250" y2="200" stroke="gray" />
+        <line x1="440" y1="100" x2="350" y2="200" stroke="gray" />
+        <line x1="440" y1="300" x2="350" y2="200" stroke="gray" />
+
+        <!-- Packet path for VLAN 10 (pc1 -> pc2) -->
+        <path id="path10" d="M160 100 C210 150 210 250 160 300" fill="none" stroke="none" />
+        <!-- Packet path for VLAN 20 (pc3 -> pc4) -->
+        <path id="path20" d="M440 100 C390 150 390 250 440 300" fill="none" stroke="none" />
+
+        <circle r="5" class="packet">
+            <animateMotion dur="4s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#path10" />
+            </animateMotion>
+        </circle>
+        <circle r="5" class="packet">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="2s" rotate="auto">
+                <mpath href="#path20" />
+            </animateMotion>
+        </circle>
+    </svg>
+    <p>
+        A VLAN (Virtual Local Area Network) separates devices into different broadcast domains. Packets from
+        VLAN 10 (blue) only reach other VLAN 10 devices, while packets from VLAN 20 (orange) are isolated to
+        their own VLAN. The animation shows packets moving within their respective VLANs.
+    </p>
+</div>
+</body>
+</html>
